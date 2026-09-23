@@ -15,20 +15,22 @@ pipeline {
 
         stage('Build') {
             steps {
-            
-                sh 'echo "print(\'Application running successfully!\')" > app.py'
                 
+                bat 'echo print("Application running successfully!") > app.py'
                 
-                sh 'python3 -m py_compile app.py'
+        
+                bat 'python -m py_compile app.py'
             }
         }
 
         stage('Deploy') {
             steps {
+                
                 input message: "Approve deployment of ${env.APP_NAME} version ${env.APP_VERSION}?", 
                       ok: "Release"
 
-                sh 'python3 app.py'
+                
+                bat 'python app.py'
             }
         }
     }
